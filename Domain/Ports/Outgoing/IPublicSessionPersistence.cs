@@ -2,6 +2,6 @@
 {
     public interface IPublicSessionPersistence
     {
-        Task InsertPublicSessionAsync(Guid sessionId, string publicToken);
+        Task<long> InsertPublicSessionAsync(long deviceId, Guid publicToken);
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface ICertificatePersistence
     {
-        Task<long> InsertCertificateAsync(int deviceId, string publicKey, string iv);
+        Task<long> InsertCertificateAsync(long dispositivoId, string stringKey, string stringIV);
     }
 }

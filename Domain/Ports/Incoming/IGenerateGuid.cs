@@ -2,7 +2,7 @@
 {
     public interface IGenerateGuid
     {
-        string GenerateGuidWithHyphens();
+        Guid GenerateGuidWithHyphens();
         string GenerateGuidWithOutHyphens();
     }
 }

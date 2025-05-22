@@ -1,33 +1,29 @@
-﻿using Domain.Entities;
-using Domain.Exceptions;
+﻿using Domain.Exceptions;
 using Domain.Ports.Outgoing;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace Infrastructure.Repositories
 {
-    public class CertificateRepository : ICertificatePersistence
+    public class PublicSessionRepository : IPublicSessionPersistence
     {
         private readonly string _connectionString;
-
-        public CertificateRepository(string connectionString)
+        public PublicSessionRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
-
-        public async Task<long> InsertCertificateAsync(long dispositivoId,string stringKey, string stringIV)
+        public async Task<long> InsertPublicSessionAsync(long deviceId, Guid publicToken)
         {
             try
             {
                 using var connection = new SqlConnection(_connectionString);
-                using var command = new SqlCommand("DISPOSITIVO_CERTIFICADO_Insert", connection)
+                using var command = new SqlCommand("bil.SESSION_InsertPublic", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue("@DICE_DSPT_ID_IT", dispositivoId);
-                command.Parameters.AddWithValue("@DICE_KEY_VC", stringKey);
-                command.Parameters.AddWithValue("@DICE_IV_VC", stringIV);
+                command.Parameters.AddWithValue("@SESS_DSPT_ID_IT", deviceId);
+                command.Parameters.AddWithValue("@SESS_PUBLICA_UN", publicToken);
 
                 await connection.OpenAsync();
 
@@ -36,16 +32,14 @@ namespace Infrastructure.Repositories
                 {
                     var identityValue = reader["@@IDENTITY"];
                     if (identityValue != DBNull.Value)
-                    {
                         return Convert.ToInt64(identityValue);
-                    }
                 }
 
-                throw new GenericError("Dispositivo Certificado no identificado");
+                throw new GenericError("Dispositivo no identificado");
             }
             catch (SqlException ex)
             {
-                throw new GenericError("Error al insertar el certificado en la base de datos.", ex);
+                throw new GenericError("Exception", ex.Message);
             }
         }
     }

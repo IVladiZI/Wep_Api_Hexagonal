@@ -17,7 +17,7 @@ namespace Application
             _encoderMessage = encoderMessage;
             _certificatePersistence = certificatePersistence;
         }
-        public async Task<CertifiedPublic> GenerateDeviceCertificateAsync(int deviceId)
+        public async Task<CertifiedPublic> GenerateDeviceCertificateAsync(long deviceId)
         {
             var guid = _generateGuid.GenerateGuidWithOutHyphens();
             var iv = _cryptographyGenerator.GenerateRandomIV(16);

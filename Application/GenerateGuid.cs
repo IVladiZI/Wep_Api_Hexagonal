@@ -4,9 +4,9 @@ namespace Application
 {
     public class GenerateGuid : IGenerateGuid
     {
-        public string GenerateGuidWithHyphens()
+        public Guid GenerateGuidWithHyphens()
         {
-            return Guid.NewGuid().ToString();
+            return Guid.NewGuid();
         }
 
         public string GenerateGuidWithOutHyphens()

@@ -4,6 +4,6 @@ namespace Domain.Ports.Incoming
 {
     public interface IGenerateDeviceCertificate
     {
-        Task<CertifiedPublic> GenerateDeviceCertificateAsync(int deviceId);
+        Task<CertifiedPublic> GenerateDeviceCertificateAsync(long deviceId);
     }
 }
