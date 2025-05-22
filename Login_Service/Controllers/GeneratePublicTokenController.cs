@@ -34,7 +34,7 @@ namespace Login_Service.Controllers
                 Request = JsonSerializer.Serialize(authenticationDevice),
                 Response = JsonSerializer.Serialize(response),
                 StartTimeRequest = startTimeRequest,
-                EndTimeRequest = startTimeRequest,
+                EndTimeRequest = EndTimeRequest,
                 StateResponse = response.State
             };
 

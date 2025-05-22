@@ -14,7 +14,7 @@ namespace Infrastructure.Repositories
         {
             _connectionString = connectionString;
         }
-        public async void InsertSessionHistory(SessionHistory sessionHistory)
+        public async Task InsertSessionHistory(SessionHistory sessionHistory)
         {
             try
             {
@@ -41,8 +41,5 @@ namespace Infrastructure.Repositories
                 throw new GenericError("Error al insertar el certificado en la base de datos.", ex);
             }
         }
-    }
-    {
-
     }
 }
