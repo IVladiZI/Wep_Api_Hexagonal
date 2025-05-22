@@ -2,6 +2,7 @@
 using Domain.Exceptions;
 using Domain.Ports.Incoming;
 using Domain.Ports.Outgoing;
+using System.Runtime.InteropServices;
 
 namespace Application
 {
@@ -18,6 +19,9 @@ namespace Application
         private readonly IDeviceLockedPersistence _deviceLockedPersistence;
         private readonly IGenerateGuid _generateGuid;
         private readonly ICryptographyGenerator _cryptographyGenerator;
+        private long DeviceId = 0;
+        private CertifiedPublic CertifiedPublic = new();
+        private Guid TokenGuid = Guid.Empty;
 
         public GeneratePublicToken(IBusinessErrorDictionary businessErrorDictionary, IGenerateDeviceCertificate generateDeviceCertificate, IDeviceValidator deviceValidator, IOsValidator osValidator, IDevicePersistence devicePersistence, ISeedPersistence seedPersistence, ICertificatePersistence certificatePersistence, IPublicSessionPersistence publicSessionPersistence, IDeviceLockedPersistence deviceLockedPersistence, IGenerateGuid generateGuid, ICryptographyGenerator cryptographyGenerator)
         {
@@ -51,24 +55,33 @@ namespace Application
 
                 if(authenticationDevice.Certificate)
                 {
-                    var idDevice = await _devicePersistence.InsertDeviceAsync(authenticationDevice.DeviceId,authenticationDevice.DeviceType);
+                    DeviceId = await _devicePersistence.InsertDeviceAsync(authenticationDevice.DeviceId,authenticationDevice.DeviceType);
                     
                     await _seedPersistence.GetSemillaBySendIdAsync(authenticationDevice.SendId);
 
-                    var certifiedPublic = await _generateDeviceCertificate.GenerateDeviceCertificateAsync(idDevice);
+                    CertifiedPublic = await _generateDeviceCertificate.GenerateDeviceCertificateAsync(DeviceId);
 
-                    var tokenGuid = _generateGuid.GenerateGuidWithHyphens();
-                    await _publicSessionPersistence.InsertPublicSessionAsync(idDevice, tokenGuid);
+                    TokenGuid = _generateGuid.GenerateGuidWithHyphens();
 
-                    return ApiResponseFactory.Success(certifiedPublic);
+                    await _publicSessionPersistence.InsertPublicSessionAsync(DeviceId, TokenGuid);
+
+                    return ApiResponseFactory.Success(CertifiedPublic);
                 }
 
+                DeviceId = await _devicePersistence.GetIdDevice(authenticationDevice.DeviceId, authenticationDevice.DeviceType);
+                TokenGuid = _generateGuid.GenerateGuidWithHyphens();
+                CertifiedPublic = new CertifiedPublic
+                {
+                    AuthToken = TokenGuid.ToString()
+                };
+                await _publicSessionPersistence.InsertPublicSessionAsync(DeviceId, TokenGuid);
 
+                return ApiResponseFactory.Success(CertifiedPublic);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return ApiResponseFactory.ControlledError(
+                    _businessErrorDictionary.GetErrorMessage("GENERIC_ERROR"),ex);
             }
         }
     }

@@ -17,7 +17,7 @@ namespace Infrastructure.Repositories
             try
             {
                 using var connection = new SqlConnection(_connectionString);
-                using var command = new SqlCommand("bil.SESSION_InsertPublic", connection)
+                using var command = new SqlCommand("bill.SESSION_InsertPublic", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };

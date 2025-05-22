@@ -2,8 +2,8 @@
 {
     public class CertifiedPublic : PublicToken
     {
-        public required string Key { get; set; }
-        public required string IV { get; set; }
+        public string? Key { get; set; }
+        public string? IV { get; set; }
         public long Id { get; set; }
     }
 }

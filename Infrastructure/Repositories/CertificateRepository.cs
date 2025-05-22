@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
             try
             {
                 using var connection = new SqlConnection(_connectionString);
-                using var command = new SqlCommand("DISPOSITIVO_CERTIFICADO_Insert", connection)
+                using var command = new SqlCommand("bill.DISPOSITIVO_CERTIFICADO_Insert", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
