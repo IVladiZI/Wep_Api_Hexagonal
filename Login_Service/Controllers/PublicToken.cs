@@ -8,12 +8,12 @@ namespace Login_Service.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class GeneratePublicTokenController : ControllerBase
+    public class PublicToken : ControllerBase
     {
         private readonly IGeneratePublicToken _generatePublicToken;
         private readonly ISessionHistoryPersistence _sessionHistoryPersistence;
 
-        public GeneratePublicTokenController(IGeneratePublicToken generatePublicToken, ISessionHistoryPersistence sessionHistoryPersistence)
+        public PublicToken(IGeneratePublicToken generatePublicToken, ISessionHistoryPersistence sessionHistoryPersistence)
         {
             _generatePublicToken = generatePublicToken;
             _sessionHistoryPersistence = sessionHistoryPersistence;

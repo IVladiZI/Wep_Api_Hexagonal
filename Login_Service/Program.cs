@@ -10,7 +10,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.Configure<Infrastructure.Options.DataBaseOptions>(
     builder.Configuration.GetSection("Database"));
 
@@ -31,4 +30,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();

@@ -1,7 +1,7 @@
 ﻿using Domain.Ports.Incoming;
 using System.Text;
 
-namespace Application
+namespace Application.Interactor
 {
     public class EncoderMessage : IEncoderMessage
     {

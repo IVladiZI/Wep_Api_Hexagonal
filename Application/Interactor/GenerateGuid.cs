@@ -1,6 +1,6 @@
 ﻿using Domain.Ports.Incoming;
 
-namespace Application
+namespace Application.Interactor
 {
     public class GenerateGuid : IGenerateGuid
     {

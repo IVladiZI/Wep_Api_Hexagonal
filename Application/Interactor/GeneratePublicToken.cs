@@ -4,7 +4,7 @@ using Domain.Ports.Incoming;
 using Domain.Ports.Outgoing;
 using System.Runtime.InteropServices;
 
-namespace Application
+namespace Application.Interactor
 {
     public class GeneratePublicToken : IGeneratePublicToken
     {

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Security.Cryptography;
 
-namespace Application
+namespace Application.Interactor
 {
     public class DeviceValidator : IDeviceValidator
     {

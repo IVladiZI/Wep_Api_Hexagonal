@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Application
+namespace Application.Interactor
 {
     public class CryptographyGenerator : ICryptographyGenerator
     {

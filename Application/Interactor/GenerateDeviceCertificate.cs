@@ -2,7 +2,7 @@
 using Domain.Ports.Incoming;
 using Domain.Ports.Outgoing;
 
-namespace Application
+namespace Application.Interactor
 {
     public class GenerateDeviceCertificate : IGenerateDeviceCertificate
     {

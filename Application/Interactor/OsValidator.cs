@@ -1,7 +1,7 @@
 ﻿using Domain.Enums;
 using Domain.Ports.Incoming;
 
-namespace Application
+namespace Application.Interactor
 {
     public class OsValidator : IOsValidator
     {
